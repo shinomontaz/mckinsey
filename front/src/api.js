@@ -20,6 +20,15 @@ class Api {
     var { data: reports } = await axios.get(API_URL+"/reports?state="+state+"&type="+type);
     return reports
   }
+
+  blockContent = async id => {
+    await axios.post(API_URL+"/reports"+id, {}); // TODO - send current User there
+  }
+
+  resolveReport = async id => {
+    //reports
+    await axios.put(API_URL+"/reports/"+id);
+  }
 }
 
 const api = new Api();

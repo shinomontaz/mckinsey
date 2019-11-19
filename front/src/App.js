@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 
 import {
-  Container,
   Grid,
 } from 'semantic-ui-react'
 
@@ -48,16 +47,15 @@ class App extends Component {
     })
   }
 
-  async handleResolve() {
-    alert("handleResolve")
+  async handleResolve(id) {
+    alert("handleResolve" + id)
   }
 
-  async handleBlock() {
-    alert("handleBlock")
+  async handleBlock(id) {
+    alert("handleBlock"+id)
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    console.log("this.state.currState" + this.state.currState.value)
     if (prevState.currState !== this.state.currState || prevState.currType !== this.state.currType ) {
       var listReports = await api.loadReports(this.state.currState.value, this.state.currType.value);
       this.setState({listReports});
