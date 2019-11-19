@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
 
-const area = require('./report')
+const report = require('./report')
 
 const app = express()
 app.use(cors());
