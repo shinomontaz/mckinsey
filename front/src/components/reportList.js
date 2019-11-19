@@ -8,8 +8,8 @@ class ReportItem extends Component {
     let resolve, block
 
     if (report.state === 1) {
-      resolve = <Button primary onClick={(e) => handleResolve(report.id, e)} >Resolve</Button>;
-      block = <Button secondary onClick={(e) => handleBlock(report.id, e)} >Block</Button>;
+      resolve = <Button primary onClick={() => handleResolve(report.id)} >Resolve</Button>;
+      block = <Button secondary onClick={() => handleBlock(report.id)} >Block</Button>;
     }
 
     return (

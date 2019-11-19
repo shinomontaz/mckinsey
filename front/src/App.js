@@ -21,6 +21,9 @@ class App extends Component {
       listStates: [],
       listTypes: []
     };
+    this.handleResolve = this.handleResolve.bind(this)
+    this.handleBlock = this.handleBlock.bind(this)
+
   }
 
   async componentDidMount() {
@@ -35,31 +38,25 @@ class App extends Component {
     });
   }
 
-  async handleFilterState(selected) {
-      this.setState({
-          currState: selected
-      })
-  }
-
-  async handleFilterType(selected) {
-    this.setState({
-        currType: selected
-    })
-  }
-
   async handleResolve(id) {
-    alert("handleResolve" + id)
+     await api.resolveReport(id);
+     await this.loadReports();
   }
 
   async handleBlock(id) {
-    alert("handleBlock"+id)
+    await api.blockContent(id);
+    await this.loadReports();
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevState.currState !== this.state.currState || prevState.currType !== this.state.currType ) {
-      var listReports = await api.loadReports(this.state.currState.value, this.state.currType.value);
-      this.setState({listReports});
+      await this.loadReports()
     }
+  }
+
+  async loadReports() {
+    var listReports = await api.loadReports(this.state.currState.value, this.state.currType.value);
+    this.setState({listReports});
   }
 
   render() {
@@ -68,10 +65,10 @@ class App extends Component {
       <div className="App">
       <Grid>
       <Grid.Column width={2} textAlign='left'>
-        <Select value={currState} onChange={this.handleFilterState.bind(this)} options={listStates} placeholder='Статус...' className="inline-element"/>
+        <Select value={currState} onChange={(selected) => this.setState({ currState: selected })} options={listStates} placeholder='Статус...' className="inline-element"/>
       </Grid.Column>
       <Grid.Column width={10}>
-        <Select value={currType} onChange={this.handleFilterType.bind(this)} options={listTypes} placeholder='Тип...' className="inline-element"/>
+        <Select value={currType} onChange={(selected) => this.setState({ currType: selected })} options={listTypes} placeholder='Тип...' className="inline-element"/>
       </Grid.Column>
       </Grid>
       <ReportList reports={listReports} handleResolve={this.handleResolve} handleBlock={this.handleBlock}/>

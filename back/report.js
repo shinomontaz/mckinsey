@@ -26,8 +26,7 @@ const blockContent = (req, response) => {
 //  const { user } = req.body
   const id = parseInt(req.params.id)
   // update report to state of Blocked and set is_visible to FALSE for specefic entry
-//  pool.query('WITH content_update AS (UPDATE content SET is_visible = FALSE WHERE id = $1 RETURNING id) UPDATE report SET state = $2, fk_user = $3 WHERE fk_content IN (SELECT id FROM content_update)', [id, user, BLOCKED], (error, results) => {
-  pool.query('WITH content_update AS (UPDATE content SET is_visible = FALSE WHERE id = $1 RETURNING id) UPDATE report SET state = $2 WHERE fk_content IN (SELECT id FROM content_update)', [id, BLOCKED], (error, results) => {
+    pool.query('WITH content_update AS (UPDATE report SET state = $2 WHERE id = $1 RETURNING fk_content) UPDATE content SET is_visible = FALSE WHERE id IN (SELECT fk_content FROM content_update)', [id, BLOCKED], (error, results) => {
 
     if (error) {
       throw error

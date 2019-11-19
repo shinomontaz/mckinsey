@@ -22,7 +22,7 @@ class Api {
   }
 
   blockContent = async id => {
-    await axios.post(API_URL+"/reports"+id, {}); // TODO - send current User there
+    await axios.post(API_URL+"/block/"+id, {}); // TODO - send current User there
   }
 
   resolveReport = async id => {
