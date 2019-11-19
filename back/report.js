@@ -23,7 +23,7 @@ const blockContent = (request, response) => {
   const { id, user } = req.body
 
   // update report to state of Blocked and set is_visible to FALSE for specefic entry
-  pool.query('', [id], (error, results) => {
+  pool.query('WITH content_update AS (UPDATE content SET is_visible = FALSE WHERE id = $1 RETURNING id) UPDATE report SET state = 3, fk_user = $2 WHERE fk_content IN (SELECT id FROM content_update)', [id, user], (error, results) => {
     if (error) {
       throw error
     }
@@ -34,7 +34,7 @@ const blockContent = (request, response) => {
 
 const resolveReport = (request, response) => {
   const { id, user } = req.body
-  
+
   const id = parseInt(request.params.id)
 
   pool.query('', [id], (error, results) => {
