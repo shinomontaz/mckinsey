@@ -34,6 +34,7 @@ const blockContent = (request, response) => {
 
 const resolveReport = (request, response) => {
   const { id, user } = req.body
+  
   const id = parseInt(request.params.id)
 
   pool.query('', [id], (error, results) => {
