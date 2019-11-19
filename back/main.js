@@ -4,6 +4,7 @@ const express = require('express')
 const cors = require('cors');
 
 const report = require('./report')
+const common = require('./common')
 
 const app = express()
 app.use(cors());
@@ -16,6 +17,8 @@ app.get('/', (request, response) => {
 app.get('/reports', report.getReports)
 app.put('/reports/:id', report.resolveReport) //resolve
 app.post('/block/:id', report.blockContent) // block content
+app.get('/states', common.getStates)
+app.get('/types', common.getTypes)
 
 app.listen(process.env.serverPort, (err) => {
     if (err) {
