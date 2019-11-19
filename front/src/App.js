@@ -29,8 +29,8 @@ class App extends Component {
     var listTypes = await api.loadTypes();
 
     this.setState({
-      currState: listStates[0].value,
-      currType: listTypes[0].value,
+      currState: listStates[0],
+      currType: listTypes[0],
       listStates,
       listTypes
     });
@@ -38,13 +38,13 @@ class App extends Component {
 
   async handleFilterState(selected) {
       this.setState({
-          currState: selected.value,
+          currState: selected
       })
   }
 
   async handleFilterType(selected) {
     this.setState({
-        currType: selected.value
+        currType: selected
     })
   }
 
@@ -57,9 +57,9 @@ class App extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    console.log("this.state.currState" + this.state.currState)
+    console.log("this.state.currState" + this.state.currState.value)
     if (prevState.currState !== this.state.currState || prevState.currType !== this.state.currType ) {
-      var listReports = await api.loadReports(this.state.currState, this.state.currType);
+      var listReports = await api.loadReports(this.state.currState.value, this.state.currType.value);
       this.setState({listReports});
     }
   }
