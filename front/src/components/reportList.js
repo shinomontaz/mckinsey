@@ -36,7 +36,7 @@ class ReportList extends Component {
     const { reports, handleResolve, handleBlock } = this.props;
     return (
       <Segment>
-      { reports.map((item, i)  => <ReportItem report={item} key={i} handleResolve={handleResolve} handleBlock={handleBlock} /> ) }
+      { reports.map((item)  => <ReportItem report={item} key={item.id} handleResolve={handleResolve} handleBlock={handleBlock} /> ) }
       </Segment>
     );
   }
