@@ -8,17 +8,22 @@ stages:
 cache:
   paths:
     - node_modules/
+    - .yarn
 
 install_dependencies:
   stage: build
+  before_script:
+    - yarn config set cache-folder .yarn
   script:
     - yarn
   artifacts:
     paths:
       - node_modules/
 
-testing_testing:
+yarn_test:
   stage: test
+  before_script:
+    - yarn config set cache-folder .yarn
   script: yarn test
 
 deploy:
