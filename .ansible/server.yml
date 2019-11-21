@@ -14,6 +14,10 @@
       shell: yarn
       args:
         chdir: /app/mckinsey/front
+    - name: yarn build production front
+      shell: yarn build
+      args:
+        chdir: /app/mckinsey/front
     - name: yarn back
       shell: yarn
       args:
@@ -38,7 +42,7 @@
       become: true
       ignore_errors: yes
     - name: run back
-      command: pm2 start back.config.json
+      command: pm2 start node main.js --name mc-back
       args:
         chdir: /app/mckinsey/back
     - name: stop front
@@ -46,7 +50,7 @@
       become: true
       ignore_errors: yes
     - name: run front
-      command: pm2 start front.config.json
+      command: pm2 start serve -s build --name mc-front
 #      shell: yarn start
       args:
         chdir: /app/mckinsey/front

@@ -1,9 +1,0 @@
-{
-  apps : [
-    {
-      name      : "mc-front",
-      script    : "yarn start",
-      interpreter: "none"
-    }
-  ]
-}
