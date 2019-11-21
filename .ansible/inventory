@@ -1,0 +1,2 @@
+[server]
+185.246.64.207 ansible_user=mbackend ansible_port=1488

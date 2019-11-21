@@ -1,0 +1,19 @@
+- hosts: server
+  tasks:
+    - name: deploy code
+      synchronize:
+        src: ../../
+        dest: /app/mckinsey/
+        times: no
+        rsync_opts:
+            - "--exclude=.git"
+            - "--exclude=.ansible"
+            - "--exclude=node_modules/*"
+    - name: yarn front
+      shell: yarn
+      args:
+        chdir: /app/mckinsey/front
+    - name: yarn back
+      shell: yarn
+      args:
+        chdir: /app/mckinsey/back
