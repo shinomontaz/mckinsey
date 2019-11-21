@@ -12,8 +12,6 @@ cache:
 
 install_dependencies:
   stage: build
-  before_script:
-    - yarn config set cache-folder .yarn
   script:
     - yarn
   artifacts:
@@ -23,7 +21,7 @@ install_dependencies:
 yarn_test:
   stage: test
   before_script:
-    - yarn config set cache-folder .yarn
+    - cd back
   script: yarn test
 
 deploy:
