@@ -23,9 +23,9 @@ deploy:
     - chmod 600 ~/.ssh/key.rsa
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/key.rsa
-    - ssh-keyscan -H 185.246.64.207 >> ~/.ssh/known_hosts
+    - ssh-keyscan -H $backendIp >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i .ansible/inventory .ansible/server.yml --extra-vars="serverPort=$serverPort dbHost=$dbHost dbPort=$dbPort dbUser=$dbUser dbPass=$dbPass dbName=$dbName"
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i .ansible/inventory .ansible/server.yml --extra-vars="serverPort=$serverPort dbHost=$dbHost dbPort=$dbPort dbUser=$dbUser dbPass=$dbPass dbName=$dbName backendIp=$backendIp backendPort=$backendPort"
   when: manual
   only:
     - master
