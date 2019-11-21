@@ -1,0 +1,19 @@
+stages:
+- deploy
+
+deploy:
+  stage: deploy
+  image: komly/ansible-playbook:latest
+  script:
+    - apt-get update -y && apt-get install -y rsync
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$KEY" | tr -d '\r' > ~/.ssh/key.rsa
+    - chmod 600 ~/.ssh/key.rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/key.rsa
+    - ssh-keyscan -H 185.246.64.207 >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i .ansible/inventory .ansible/server.yml --extra-vars="tag=master"
+  only:
+    - master
