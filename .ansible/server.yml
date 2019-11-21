@@ -17,3 +17,15 @@
       shell: yarn
       args:
         chdir: /app/mckinsey/back
+    - name: migrate
+      shell: node migrate.js
+      args:
+        chdir: /app/mckinsey/back
+    - name: run back
+      shell: node main.js
+      args:
+        chdir: /app/mckinsey/back
+    - name: run front
+      shell: yarn start
+      args:
+        chdir: /app/mckinsey/front
