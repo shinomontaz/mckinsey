@@ -52,6 +52,6 @@
       ignore_errors: yes
 
     - name: run front
-      command: pm2 start node_modules/react-scripts/bin/react-scripts.js --name mc-front -- start
+      command: pm2 start yarn --name mc-front -- start
       args:
         chdir: /app/mckinsey/front
