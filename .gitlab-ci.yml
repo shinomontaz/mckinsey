@@ -4,20 +4,20 @@ stages:
 - deploy
 
 cache:
-      paths:
-        - node_modules/
+  paths:
+    - node_modules/
 
-    install_dependencies:
-      stage: build
-      script:
-        - yarn
-      artifacts:
-        paths:
-          - node_modules/
+install_dependencies:
+  stage: build
+  script:
+    - yarn
+  artifacts:
+    paths:
+      - node_modules/
 
-    testing_testing:
-      stage: test
-      script: yarn test
+testing_testing:
+  stage: test
+  script: yarn test
 
 deploy:
   stage: deploy
