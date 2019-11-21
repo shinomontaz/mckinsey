@@ -1,5 +1,23 @@
 stages:
+- build
+- test
 - deploy
+
+cache:
+      paths:
+        - node_modules/
+
+    install_dependencies:
+      stage: build
+      script:
+        - yarn
+      artifacts:
+        paths:
+          - node_modules/
+
+    testing_testing:
+      stage: test
+      script: yarn test
 
 deploy:
   stage: deploy
@@ -15,5 +33,6 @@ deploy:
     - ssh-keyscan -H 185.246.64.207 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i .ansible/inventory .ansible/server.yml --extra-vars="tag=master"
+  when: manual
   only:
     - master
