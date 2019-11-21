@@ -1,4 +1,5 @@
 - hosts: server
+
   tasks:
     - name: deploy code
       synchronize:
@@ -17,15 +18,35 @@
       shell: yarn
       args:
         chdir: /app/mckinsey/back
+    - name: enable create dotenv files
+      shell:
+        cmd: |
+               cat > /app/mckinsey/back/.env <<EOF
+               serverPort={{ serverPort }}
+               dbHost={{ dbHost }}
+               dbPort={{ dbPort }}
+               dbUser={{ dbUser }}
+               dbPass={{ dbPass }}
+               dbName={{ dbName }}
+               EOF
     - name: migrate
       shell: node migrate.js
       args:
         chdir: /app/mckinsey/back
+    - name: stop back
+      command: pm2 stop mc-back
+      become: true
+      ignore_errors: yes
     - name: run back
-      shell: node main.js
+      command: pm2 start back.config.json
       args:
         chdir: /app/mckinsey/back
+    - name: stop front
+      command: pm2 stop mc-front
+      become: true
+      ignore_errors: yes
     - name: run front
-      shell: yarn start
+      command: pm2 start front.config.json
+#      shell: yarn start
       args:
         chdir: /app/mckinsey/front

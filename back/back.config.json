@@ -1,0 +1,9 @@
+{
+  apps : [
+    {
+      name      : "mc-back",
+      script    : "node main.js",
+      interpreter: "none"
+    }
+  ]
+}

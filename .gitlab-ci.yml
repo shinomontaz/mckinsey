@@ -25,7 +25,7 @@ deploy:
     - ssh-add ~/.ssh/key.rsa
     - ssh-keyscan -H 185.246.64.207 >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i .ansible/inventory .ansible/server.yml --extra-vars="tag=master"
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i .ansible/inventory .ansible/server.yml --extra-vars="serverPort=$serverPort dbHost=$dbHost dbPort=$dbPort dbUser=$dbUser dbPass=$dbPass dbName=$dbName"
   when: manual
   only:
     - master
