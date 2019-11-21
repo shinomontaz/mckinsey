@@ -14,10 +14,6 @@
       shell: yarn
       args:
         chdir: /app/mckinsey/front
-    - name: yarn build production front
-      shell: yarn build
-      args:
-        chdir: /app/mckinsey/front
     - name: yarn back
       shell: yarn
       args:
@@ -50,7 +46,6 @@
       become: true
       ignore_errors: yes
     - name: run front
-      command: pm2 start serve -s build --name mc-front
-#      shell: yarn start
+      command: pm2 start yarn start --name mc-front
       args:
         chdir: /app/mckinsey/front
