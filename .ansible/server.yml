@@ -10,15 +10,18 @@
             - "--exclude=.git"
             - "--exclude=.ansible"
             - "--exclude=node_modules/*"
+
     - name: yarn front
       shell: yarn
       args:
         chdir: /app/mckinsey/front
+
     - name: yarn back
       shell: yarn
       args:
         chdir: /app/mckinsey/back
-    - name: enable create dotenv files
+
+    - name: create dotenv files
       shell:
         cmd: |
                cat > /app/mckinsey/back/.env <<EOF
@@ -29,22 +32,25 @@
                dbPass={{ dbPass }}
                dbName={{ dbName }}
                EOF
+
     - name: migrate
       shell: node migrate.js
       args:
         chdir: /app/mckinsey/back
+
     - name: stop back
-      command: pm2 stop mc-back
-      become: true
+      command: pm2 delete mc-back
       ignore_errors: yes
+
     - name: run back
       command: pm2 start node main.js --name mc-back
       args:
         chdir: /app/mckinsey/back
+
     - name: stop front
-      command: pm2 stop mc-front
-      become: true
+      command: pm2 delete mc-front
       ignore_errors: yes
+
     - name: run front
       command: pm2 start node_modules/react-scripts/bin/react-scripts.js --name mc-front -- start
       args:
