@@ -10,7 +10,7 @@
             - "--exclude=.git"
             - "--exclude=.ansible"
             - "--exclude=node_modules/*"
-        become: yes
+      become: yes
 
     - name: yarn front
       shell: yarn
@@ -63,6 +63,6 @@
       ignore_errors: yes
 
     - name: run front
-      command: pm2 start yarn --name mc-front -- start
+      command: pm2 start npm --name mc-front -- start
       args:
         chdir: /app/mckinsey/front
